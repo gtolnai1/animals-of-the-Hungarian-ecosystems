@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fauna of Hungarian Ecosystems Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'eco-bg': '#faf9f6',
+                        'eco-forest': '#2d6a4f',
+                        'eco-forest-light': '#d8f3dc',
+                        'eco-water': '#0077b6',
+                        'eco-water-light': '#caf0f8',
+                        'eco-accent': '#e07a5f',
+                        'eco-text': '#2b2d42'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'serif': ['Merriweather', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #faf9f6;
+            color: #2b2d42;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 50vh;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 40vh;
+                max-height: 300px;
+            }
+        }
+        .nav-btn.active {
+            background-color: #2d6a4f;
+            color: white;
+            font-weight: 600;
+        }
+        .image-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e5e7eb;
+            color: #6b7280;
+            font-size: 2rem;
+            min-height: 150px;
+            border-radius: 0.375rem;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased flex flex-col md:flex-row min-h-screen">
+
+<!-- Chosen Palette: Nature's Harmony (Warm neutral background, Deep Forest Green, Deep Water Blue, Earthy Accent) -->
+<!-- Application Structure Plan: The SPA is structured as an interactive dashboard specifically designed for 16-year-old Hungarian students studying biology in English. It uses a sidebar navigation to split the content into logical, easily digestible sections: Forest Ecosystems, Aquatic Ecosystems, a quantitative visualizer for Winter Adaptations, and a fully interactive bilingual Mini Dictionary. This structure prevents cognitive overload, allows non-linear exploration, and directly supports their dual learning goals (biological concepts + English terminology). -->
+<!-- Visualization & Content Choices: 
+1. Ecosystem Overviews (Forest/Aquatic) -> Goal: Inform -> Method: Responsive text cards with image placeholders -> Interaction: Scrolling and reading, clear typography -> Justification: Breaks text chunks into distinct habitats. Library: HTML/Tailwind.
+2. Winter Adaptations -> Goal: Compare -> Method: Bar Chart -> Interaction: Hover tooltips -> Justification: Visually contrasts the activity levels of small mammals to make the concept of hibernation vs active foraging memorable. Library: Chart.js (Canvas).
+3. Species Distribution -> Goal: Inform/Proportions -> Method: Doughnut Chart -> Interaction: Hover tooltips -> Justification: Shows the breakdown of species types covered in the curriculum. Library: Chart.js (Canvas).
+4. Bilingual Dictionary -> Goal: Organize/Search -> Method: Interactive Data Table -> Interaction: Real-time text filtering and category dropdown -> Justification: Essential for language learners to quickly find and memorize terms. Library: Vanilla JS + HTML Table. NO SVG/Mermaid used. 
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <nav class="w-full md:w-64 bg-white shadow-lg z-10 flex flex-col sticky top-0 md:h-screen">
+        <div class="p-6 bg-eco-forest text-white">
+            <h1 class="text-2xl font-serif font-bold leading-tight">Hungarian Ecosystems</h1>
+            <p class="text-eco-forest-light text-sm mt-2">Biology in English</p>
+        </div>
+        <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto flex-1 p-4 gap-2">
+            <button onclick="navigate('forest')" id="btn-forest" class="nav-btn active flex items-center p-3 rounded-lg text-left transition-colors whitespace-nowrap md:whitespace-normal text-eco-text hover:bg-gray-100">
+                <span class="mr-3 text-xl">🌲</span> Forest Communities
+            </button>
+            <button onclick="navigate('aquatic')" id="btn-aquatic" class="nav-btn flex items-center p-3 rounded-lg text-left transition-colors whitespace-nowrap md:whitespace-normal text-eco-text hover:bg-gray-100">
+                <span class="mr-3 text-xl">🐟</span> Aquatic Communities
+            </button>
+            <button onclick="navigate('adaptations')" id="btn-adaptations" class="nav-btn flex items-center p-3 rounded-lg text-left transition-colors whitespace-nowrap md:whitespace-normal text-eco-text hover:bg-gray-100">
+                <span class="mr-3 text-xl">❄️</span> Winter Adaptations
+            </button>
+            <button onclick="navigate('dictionary')" id="btn-dictionary" class="nav-btn flex items-center p-3 rounded-lg text-left transition-colors whitespace-nowrap md:whitespace-normal text-eco-text hover:bg-gray-100">
+                <span class="mr-3 text-xl">📖</span> Mini Dictionary
+            </button>
+        </div>
+    </nav>
+
+    <main class="flex-1 p-6 md:p-10 lg:p-12 overflow-y-auto">
+        <section id="forest" class="content-section block">
+            <header class="mb-8">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-eco-forest mb-4">The Fauna of Forest Communities</h2>
+                <div class="border-l-4 border-eco-forest pl-4 bg-white p-4 rounded-r-lg shadow-sm">
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        This section explores the diverse and species-rich animal life of domestic forest communities. You will learn about large herbivores, small mammals, and forest birds, understanding how they interact directly with plant populations.
+                    </p>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-eco-forest-light px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-eco-forest">Large Herbivores & Mammals</h3>
+                        <span class="text-2xl">🦌</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 mb-4">
+                            The herbivorous large game animals in our forests are mainly mammals. Wildlife management plays an important role in regulating their population sizes. Key species include:
+                        </p>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-800 font-medium">
+                            <li><span class="text-eco-forest">Red deer</span> (Szarvas)</li>
+                            <li><span class="text-eco-forest">Roe deer</span> (Őz)</li>
+                            <li><span class="text-eco-forest">Wild boar</span> (Vaddisznó) - Highly prolific, omnivorous</li>
+                            <li><span class="text-eco-forest">Fallow deer</span> (Dámvad) - Introduced</li>
+                            <li><span class="text-eco-forest">Mouflon</span> (Muflon) - Introduced</li>
+                        </ul>
+                        <div class="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <div>
+                                <img src="figure-49-1-red deer.jpg" alt="Red deer" class="w-full h-32 object-cover rounded-lg shadow-sm" data-emoji="🦌" onerror="fallbackImage(this)">
+                                <p class="text-xs text-center mt-2 text-gray-500">Figure 49.1: Red deer</p>
+                            </div>
+                            <div>
+                                <img src="figure-49-2-mouflon.jpg" alt="Mouflon" class="w-full h-32 object-cover rounded-lg shadow-sm" data-emoji="🐏" onerror="fallbackImage(this)">
+                                <p class="text-xs text-center mt-2 text-gray-500">Figure 49.2: Mouflon</p>
+                            </div>
+                            <div>
+                                <img src="figure-49-3-wild-cat.png" alt="Wild cat" class="w-full h-32 object-cover rounded-lg shadow-sm" data-emoji="🐈" onerror="fallbackImage(this)">
+                                <p class="text-xs text-center mt-2 text-gray-500">Figure 49.3: Wild Cat</p>
+                            </div>
+                            <div>
+                                <img src="figure-49-4-pheasant.jpg" alt="Pheasant" class="w-full h-32 object-cover rounded-lg shadow-sm" data-emoji="🪶" onerror="fallbackImage(this)">
+                                <p class="text-xs text-center mt-2 text-gray-500">Figure 49.4: Pheasant</p>
+                            </div>
+                            <div>
+                                <img src="figure-49-5-bustard.jpg" alt="Great Bustard" class="w-full h-32 object-cover rounded-lg shadow-sm" data-emoji="🦤" onerror="fallbackImage(this)">
+                                <p class="text-xs text-center mt-2 text-gray-500">Figure 49.5: Great Bustard</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                        <div class="bg-amber-100 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                            <h3 class="text-xl font-bold text-amber-800">Small Mammals</h3>
+                            <span class="text-2xl">🐿️</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-gray-700 mb-4">
+                                Small herbivorous mammals show fascinating adaptations to survive the hardships of the food-scarce winter. Examples include:
+                            </p>
+                            <ul class="space-y-3">
+                                <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                                    <span class="text-xl mr-3">🐁</span>
+                                    <div>
+                                        <strong class="text-gray-900">Bank vole & Wood mouse:</strong>
+                                        <p class="text-sm text-gray-600">Gather food reserves, remain active under leaf litter and snow.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                                    <span class="text-xl mr-3">🐿️</span>
+                                    <div>
+                                        <strong class="text-gray-900">Squirrel:</strong>
+                                        <p class="text-sm text-gray-600">Winter activity decreases significantly.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                                    <span class="text-xl mr-3">💤</span>
+                                    <div>
+                                        <strong class="text-gray-900">Edible dormouse:</strong>
+                                        <p class="text-sm text-gray-600">Fatten up in autumn and hibernate (sleep) through the entire winter.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                        <div class="bg-blue-50 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                            <h3 class="text-xl font-bold text-blue-800">Forest Birds</h3>
+                            <span class="text-2xl">🐦</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-gray-700">
+                                Among the forest birds, there are relatively few true seed-eaters. Notable examples of these seed-eaters include the <strong>hawfinch</strong> (meggyvágó) and the <strong>common chaffinch</strong> (erdei pinty).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="aquatic" class="content-section hidden">
+            <header class="mb-8">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-eco-water mb-4">The Fauna of Aquatic Communities</h2>
+                <p class="text-lg text-gray-700 leading-relaxed border-l-4 border-eco-water pl-4 bg-white p-4 rounded-r-lg shadow-sm">
+                    This section dives into aquatic communities, from microscopic plankton with massive population sizes to fish, amphibians, reptiles, and birds that rely on water habitats.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-eco-water-light px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-xl font-bold text-eco-water flex items-center"><span class="text-2xl mr-2">🦠</span> Plankton</h3>
+                    </div>
+                    <div class="p-6 text-gray-700">
+                        <p class="mb-4">Organisms of the plankton have the largest population sizes in aquatic ecosystems. They form the base of the food web.</p>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Photoautotrophic single-celled organisms</li>
+                            <li>Ciliated protozoans (ciliates)</li>
+                            <li>Water fleas</li>
+                            <li>Copepods</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 lg:col-span-2">
+                    <div class="bg-blue-100 px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-xl font-bold text-blue-900 flex items-center"><span class="text-2xl mr-2">🐟</span> Fish & Aquatic Animals</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-2 border-b pb-1">Herbivorous Fish</h4>
+                                <ul class="list-disc pl-5 mb-4 text-gray-700">
+                                    <li><strong>Common carp</strong> (Ponty)</li>
+                                    <li><strong>Crucian carp</strong> (Kárász)</li>
+                                </ul>
+                                <h4 class="font-bold text-gray-900 mb-2 border-b pb-1">Predatory Fish</h4>
+                                <ul class="list-disc pl-5 text-gray-700">
+                                    <li><strong>Northern pike</strong> (Csuka)</li>
+                                    <li><strong>Wels catfish</strong> (Harcsa)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-2 border-b pb-1">Coastal & Bank Areas</h4>
+                                <p class="text-gray-700 text-sm mb-3">Animals living near the water are also part of this community.</p>
+                                <ul class="list-disc pl-5 text-gray-700 text-sm space-y-1">
+                                    <li><strong>Reptiles:</strong> European pond turtle</li>
+                                    <li><strong>Birds:</strong> Great egret</li>
+                                    <li><strong>Mammals:</strong> Otter</li>
+                                    <li><strong>Amphibians:</strong> Local frog/toad species</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 grid grid-cols-2 md:grid-cols-5 gap-3">
+                            <div class="flex flex-col items-center">
+                                <img src="figure-49-6-carp.jpg" alt="Common carp" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🐟" onerror="fallbackImage(this)">
+                                <span class="text-xs mt-1 text-center">Fig 49.6: Carp</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <img src="figure-49-7-pike.jpg" alt="Northern pike" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🦈" onerror="fallbackImage(this)">
+                                <span class="text-xs mt-1 text-center">Fig 49.7: Pike</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <img src="figure-49-8-catfish.jpg" alt="Wels catfish" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🐟" onerror="fallbackImage(this)">
+                                <span class="text-xs mt-1 text-center">Fig 49.8: Catfish</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <img src="figure-49-9-pond-turtles.jpg" alt="Turtle" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🐢" onerror="fallbackImage(this)">
+                                <span class="text-xs mt-1 text-center">Fig 49.9: Turtle</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <img src="figure-49-11-great-egret.jpg" alt="Great egret" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🦢" onerror="fallbackImage(this)">
+                                <span class="text-xs mt-1 text-center">Fig 49.11: Egret</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-gray-800 text-white p-6 rounded-xl shadow-lg relative overflow-hidden">
+                <div class="absolute top-0 right-0 opacity-10 text-9xl transform translate-x-4 -translate-y-8">📖</div>
+                <h3 class="text-xl font-bold mb-2">Historical Context: The Carpathian Basin</h3>
+                <p class="text-gray-300 italic max-w-3xl">
+                    "The animal life of the Carpathian Basin over the last one and a half thousand years has changed significantly..."
+                </p>
+                <p class="text-sm mt-4 text-gray-400">
+                    Historical shifts in the local fauna include species that were hunted to extinction or driven out due to habitat loss over the centuries.
+                </p>
+            </div>
+        </section>
+
+        <section id="adaptations" class="content-section hidden">
+            <header class="mb-8">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-eco-accent mb-4">Data Visualization & Analytics</h2>
+                <p class="text-lg text-gray-700 leading-relaxed border-l-4 border-eco-accent pl-4 bg-white p-4 rounded-r-lg shadow-sm">
+                    Interactive visualizations representing biological concepts from the report. Hover over the data points to explore behavioral metrics and species distributions.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 flex flex-col">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Winter Activity Levels of Small Mammals</h3>
+                    <p class="text-sm text-gray-500 mb-6">Relative winter foraging activity and metabolic state.</p>
+                    <div class="chart-container flex-grow">
+                        <canvas id="winterActivityChart"></canvas>
+                    </div>
+                    <div class="mt-6 bg-amber-50 p-4 rounded-lg text-sm text-amber-900 border border-amber-200">
+                        <strong>Insight:</strong> Small mammals use vastly different strategies. Voles/Mice rely on hoarded food and under-snow movement, Squirrels reduce movement to conserve energy, while Dormice undergo complete physiological hibernation.
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 flex flex-col">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Studied Species by Category</h3>
+                    <p class="text-sm text-gray-500 mb-6">Distribution of specific animals mentioned in the Hungarian Ecosystems text.</p>
+                    <div class="chart-container flex-grow">
+                        <canvas id="speciesDistributionChart"></canvas>
+                    </div>
+                    <div class="mt-6 bg-blue-50 p-4 rounded-lg text-sm text-blue-900 border border-blue-200">
+                        <strong>Insight:</strong> The curriculum places a strong emphasis on Mammals and Fish/Aquatic life to illustrate food web dynamics in forest and aquatic environments respectively.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dictionary" class="content-section hidden">
+            <header class="mb-8">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-800 mb-4">Interactive Mini Dictionary</h2>
+                <p class="text-lg text-gray-700 leading-relaxed border-l-4 border-gray-400 pl-4 bg-white p-4 rounded-r-lg shadow-sm">
+                    Search and filter essential vocabulary to help master biology terminology in English.
+                </p>
+            </header>
+
+            <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <div class="flex-1 relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">🔍</span>
+                        <input type="text" id="searchInput" placeholder="Search in English or Hungarian..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco-forest focus:border-eco-forest outline-none transition-shadow">
+                    </div>
+                    <div class="w-full md:w-64">
+                        <select id="categoryFilter" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco-forest focus:border-eco-forest outline-none appearance-none bg-white">
+                            <option value="All">All Categories</option>
+                            <option value="Ecological Term">Ecological Terms</option>
+                            <option value="Mammal">Mammals</option>
+                            <option value="Bird">Birds</option>
+                            <option value="Fish">Fish</option>
+                            <option value="Reptile">Reptiles</option>
+                            <option value="Microorganism/Plankton">Microorganisms / Plankton</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-lg border border-gray-200">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-700 uppercase text-xs tracking-wider">
+                                <th class="p-4 border-b font-bold w-1/3">Hungarian (Magyar)</th>
+                                <th class="p-4 border-b font-bold w-1/3">English (Angol)</th>
+                                <th class="p-4 border-b font-bold w-1/3">Category / Note</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dictionaryBody" class="text-sm divide-y divide-gray-200">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="noResultsMsg" class="hidden text-center py-8 text-gray-500">
+                    No terms found matching your search criteria.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const dictionaryData = [
+            { hun: 'társulás', eng: 'community / ecosystem', cat: 'Ecological Term', note: 'A group of interacting populations in an area.' },
+            { hun: 'állatvilág / fauna', eng: 'fauna / animal life', cat: 'Ecological Term', note: 'All the animal life in a particular region.' },
+            { hun: 'fás társulás', eng: 'forest community / woody ecosystem', cat: 'Ecological Term', note: 'Habitats dominated by trees.' },
+            { hun: 'növényevő', eng: 'herbivore / herbivorous', cat: 'Ecological Term', note: 'An animal that feeds on plants.' },
+            { hun: 'mindenevő', eng: 'omnivore / omnivorous', cat: 'Ecological Term', note: 'An animal that eats both plants and meat.' },
+            { hun: 'ragadozó', eng: 'predator / carnivorous', cat: 'Ecological Term', note: 'An animal that hunts other animals for food.' },
+            { hun: 'vadgazdálkodás', eng: 'wildlife management', cat: 'Ecological Term', note: 'Regulating animal populations and habitats.' },
+            { hun: 'téli álmot alszik', eng: 'to hibernate', cat: 'Ecological Term', note: 'To spend the winter in a dormant state.' },
+            { hun: 'fotoautotróf', eng: 'photoautotrophic', cat: 'Ecological Term', note: 'Organisms that make their own food using light.' },
+            { hun: 'egysejtű', eng: 'single-celled organism / protozoan', cat: 'Ecological Term', note: 'Organisms consisting of only one cell.' },
+            { hun: 'szarvas / gímszarvas', eng: 'red deer', cat: 'Mammal', note: 'Large herbivore' },
+            { hun: 'őz', eng: 'roe deer', cat: 'Mammal', note: 'Large herbivore' },
+            { hun: 'vaddisznó', eng: 'wild boar', cat: 'Mammal', note: 'Omnivore' },
+            { hun: 'dámvad', eng: 'fallow deer', cat: 'Mammal', note: 'Introduced' },
+            { hun: 'muflon', eng: 'mouflon', cat: 'Mammal', note: 'Introduced' },
+            { hun: 'erdei pocok', eng: 'bank vole', cat: 'Mammal', note: 'Small mammal, active in winter' },
+            { hun: 'erdei egér', eng: 'wood mouse', cat: 'Mammal', note: 'Small mammal, active in winter' },
+            { hun: 'mókus', eng: 'squirrel', cat: 'Mammal', note: 'Small mammal, decreased winter activity' },
+            { hun: 'nagy pele', eng: 'edible dormouse (fat dormouse)', cat: 'Mammal', note: 'Hibernates entirely' },
+            { hun: 'vidra', eng: 'otter', cat: 'Mammal', note: 'Aquatic mammal' },
+            { hun: 'meggyvágó', eng: 'hawfinch', cat: 'Bird', note: 'Seed-eater' },
+            { hun: 'erdei pinty', eng: 'common chaffinch', cat: 'Bird', note: 'Seed-eater' },
+            { hun: 'nagy kócsag', eng: 'great egret', cat: 'Bird', note: 'Water bird' },
+            { hun: 'ponty', eng: 'common carp', cat: 'Fish', note: 'Herbivorous' },
+            { hun: 'kárász', eng: 'crucian carp', cat: 'Fish', note: 'Herbivorous' },
+            { hun: 'csuka', eng: 'northern pike', cat: 'Fish', note: 'Predatory' },
+            { hun: 'harcsa', eng: 'wels catfish', cat: 'Fish', note: 'Predatory' },
+            { hun: 'mocsári teknős', eng: 'European pond turtle', cat: 'Reptile', note: 'Coastal/Bank' },
+            { hun: 'bolharák', eng: 'water flea', cat: 'Microorganism/Plankton', note: 'Crustacean' },
+            { hun: 'kandicsrák', eng: 'copepod', cat: 'Microorganism/Plankton', note: 'Crustacean' },
+            { hun: 'csillós egysejtű', eng: 'ciliated protozoan / ciliate', cat: 'Microorganism/Plankton', note: 'Microorganism' }
+        ];
+
+        let state = {
+            activeSection: 'forest',
+            searchTerm: '',
+            filterCategory: 'All',
+            chartsRendered: false
+        };
+
+        function fallbackImage(img) {
+            const originalSrc = img.getAttribute('src');
+            const emoji = img.getAttribute('data-emoji') || '🖼️';
+            const baseName = originalSrc.substring(0, originalSrc.lastIndexOf('.'));
+            
+            if (!img.dataset.extState) {
+                img.dataset.extState = '1';
+                img.dataset.originalExt = originalSrc.includes('.jpg') ? '.jpg' : (originalSrc.includes('.png') ? '.png' : '');
+            }
+            
+            // Try different extensions just in case the OS saved it differently
+            if (img.dataset.extState === '1' && img.dataset.originalExt === '.jpg') {
+                img.dataset.extState = '2';
+                img.src = baseName + '.jpeg';
+                return;
+            } else if (img.dataset.extState === '2' && img.dataset.originalExt === '.jpg') {
+                img.dataset.extState = '3';
+                img.src = baseName + '.JPG';
+                return;
+            } else if (img.dataset.extState === '1' && img.dataset.originalExt === '.png') {
+                img.dataset.extState = '2';
+                img.src = baseName + '.PNG';
+                return;
+            }
+            
+            // If all file attempts fail, display an error box containing the exact filename missing
+            let classes = img.className.replace('object-cover', '');
+            img.outerHTML = `
+                <div class="bg-gray-200 flex flex-col items-center justify-center text-3xl shadow-sm rounded-lg border border-red-200 ${classes}">
+                    <span>${emoji}</span>
+                    <span class="text-[10px] text-red-500 font-bold mt-2 text-center leading-tight w-full px-2 break-all">Missing:<br>${originalSrc}</span>
+                </div>
+            `;
+        }
+
+        function navigate(sectionId) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active', 'bg-eco-forest', 'text-white'));
+            
+            document.getElementById(sectionId).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-${sectionId}`);
+            activeBtn.classList.add('active');
+            
+            state.activeSection = sectionId;
+
+            if (sectionId === 'adaptations' && !state.chartsRendered) {
+                renderCharts();
+                state.chartsRendered = true;
+            }
+        }
+
+        function renderDictionary() {
+            const tbody = document.getElementById('dictionaryBody');
+            const noResults = document.getElementById('noResultsMsg');
+            tbody.innerHTML = '';
+            
+            const termLower = state.searchTerm.toLowerCase();
+            
+            const filteredData = dictionaryData.filter(item => {
+                const matchesSearch = item.hun.toLowerCase().includes(termLower) || item.eng.toLowerCase().includes(termLower);
+                const matchesCategory = state.filterCategory === 'All' || item.cat === state.filterCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            if (filteredData.length === 0) {
+                noResults.classList.remove('hidden');
+                tbody.parentNode.classList.add('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                tbody.parentNode.classList.remove('hidden');
+                
+                filteredData.forEach((item, index) => {
+                    const tr = document.createElement('tr');
+                    tr.className = index % 2 === 0 ? 'bg-white hover:bg-gray-50 transition-colors' : 'bg-gray-50 hover:bg-gray-100 transition-colors';
+                    
+                    let catColor = 'text-gray-500 bg-gray-100';
+                    if (item.cat === 'Mammal') catColor = 'text-orange-700 bg-orange-100';
+                    if (item.cat === 'Bird') catColor = 'text-blue-700 bg-blue-100';
+                    if (item.cat === 'Fish') catColor = 'text-cyan-700 bg-cyan-100';
+                    if (item.cat === 'Ecological Term') catColor = 'text-emerald-700 bg-emerald-100';
+                    
+                    tr.innerHTML = `
+                        <td class="p-4 font-medium text-gray-900">${item.hun}</td>
+                        <td class="p-4 text-eco-forest font-semibold">${item.eng}</td>
+                        <td class="p-4">
+                            <div class="flex flex-col items-start gap-1">
+                                <span class="px-2 py-1 text-xs font-semibold rounded-md ${catColor}">${item.cat}</span>
+                                <span class="text-xs text-gray-500">${item.note}</span>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            state.searchTerm = e.target.value;
+            renderDictionary();
+        });
+
+        document.getElementById('categoryFilter').addEventListener('change', (e) => {
+            state.filterCategory = e.target.value;
+            renderDictionary();
+        });
+
+        function renderCharts() {
+            const ctxActivity = document.getElementById('winterActivityChart').getContext('2d');
+            new Chart(ctxActivity, {
+                type: 'bar',
+                data: {
+                    labels: ['Bank Vole', 'Wood Mouse', 'Squirrel', 'Edible Dormouse'],
+                    datasets: [{
+                        label: 'Relative Winter Activity Level (%)',
+                        data: [100, 100, 30, 0],
+                        backgroundColor: [
+                            'rgba(45, 106, 79, 0.8)', 
+                            'rgba(45, 106, 79, 0.8)', 
+                            'rgba(224, 122, 95, 0.8)', 
+                            'rgba(142, 154, 175, 0.8)'  
+                        ],
+                        borderColor: [
+                            'rgb(45, 106, 79)',
+                            'rgb(45, 106, 79)',
+                            'rgb(224, 122, 95)',
+                            'rgb(142, 154, 175)'
+                        ],
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 110,
+                            title: { display: true, text: 'Activity %' }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    if(value === 100) return '100% Active (Foraging under snow)';
+                                    if(value === 30) return 'Decreased Activity';
+                                    if(value === 0) return 'Hibernating (Deep Sleep)';
+                                    return value + '%';
+                                }
+                            }
+                        },
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            const catCounts = { 'Mammal': 10, 'Bird': 3, 'Fish': 4, 'Other Aquatic': 4 };
+            const ctxSpecies = document.getElementById('speciesDistributionChart').getContext('2d');
+            new Chart(ctxSpecies, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(catCounts),
+                    datasets: [{
+                        data: Object.values(catCounts),
+                        backgroundColor: [
+                            '#e07a5f', '#3d5a80', '#98c1d9', '#293241'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.label + ': ' + context.raw + ' species studied';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        renderDictionary();
+    </script>
+</body>
+</html>
