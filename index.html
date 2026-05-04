@@ -91,6 +91,9 @@
             <button onclick="navigate('adaptations')" id="btn-adaptations" class="nav-btn flex items-center p-3 rounded-lg text-left transition-colors whitespace-nowrap md:whitespace-normal text-eco-text hover:bg-gray-100">
                 <span class="mr-3 text-xl">❄️</span> Winter Adaptations
             </button>
+            <button onclick="navigate('quiz')" id="btn-quiz" class="nav-btn flex items-center p-3 rounded-lg text-left transition-colors whitespace-nowrap md:whitespace-normal text-eco-text hover:bg-gray-100">
+                <span class="mr-3 text-xl">📝</span> Interactive Quiz
+            </button>
             <button onclick="navigate('dictionary')" id="btn-dictionary" class="nav-btn flex items-center p-3 rounded-lg text-left transition-colors whitespace-nowrap md:whitespace-normal text-eco-text hover:bg-gray-100">
                 <span class="mr-3 text-xl">📖</span> Mini Dictionary
             </button>
@@ -127,23 +130,23 @@
                         </ul>
                         <div class="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
                             <div>
-                                <img src="figure-49-1-red deer.jpg" alt="Red deer" class="w-full h-32 object-cover rounded-lg shadow-sm" data-emoji="🦌" onerror="fallbackImage(this)">
+                                <img src="figure-49-1-red deer.jpg" alt="Red deer" class="w-full h-32 object-cover rounded-lg shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🦌" onerror="fallbackImage(this)">
                                 <p class="text-xs text-center mt-2 text-gray-500">Figure 49.1: Red deer</p>
                             </div>
                             <div>
-                                <img src="figure-49-2-mouflon.png" alt="Mouflon" class="w-full h-32 object-cover rounded-lg shadow-sm" data-emoji="🐏" onerror="fallbackImage(this)">
+                                <img src="figure-49-2-mouflon.png" alt="Mouflon" class="w-full h-32 object-cover rounded-lg shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🐏" onerror="fallbackImage(this)">
                                 <p class="text-xs text-center mt-2 text-gray-500">Figure 49.2: Mouflon</p>
                             </div>
                             <div>
-                                <img src="figure-49-3-wild-cat.png" alt="Wild cat" class="w-full h-32 object-cover rounded-lg shadow-sm" data-emoji="🐈" onerror="fallbackImage(this)">
+                                <img src="figure-49-3-wild-cat.png" alt="Wild cat" class="w-full h-32 object-cover rounded-lg shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🐈" onerror="fallbackImage(this)">
                                 <p class="text-xs text-center mt-2 text-gray-500">Figure 49.3: Wild Cat</p>
                             </div>
                             <div>
-                                <img src="figure-49-4-pheasant.png" alt="Pheasant" class="w-full h-32 object-cover rounded-lg shadow-sm" data-emoji="🪶" onerror="fallbackImage(this)">
+                                <img src="figure-49-4-pheasant.png" alt="Pheasant" class="w-full h-32 object-cover rounded-lg shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🪶" onerror="fallbackImage(this)">
                                 <p class="text-xs text-center mt-2 text-gray-500">Figure 49.4: Pheasant</p>
                             </div>
                             <div>
-                                <img src="figure-49-5-bustard.png" alt="Great Bustard" class="w-full h-32 object-cover rounded-lg shadow-sm" data-emoji="🦤" onerror="fallbackImage(this)">
+                                <img src="figure-49-5-bustard.png" alt="Great Bustard" class="w-full h-32 object-cover rounded-lg shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🦤" onerror="fallbackImage(this)">
                                 <p class="text-xs text-center mt-2 text-gray-500">Figure 49.5: Great Bustard</p>
                             </div>
                         </div>
@@ -257,27 +260,27 @@
 
                         <div class="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                             <div class="flex flex-col items-center">
-                                <img src="figure-49-6-carp.png" alt="Common carp" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🐟" onerror="fallbackImage(this)">
+                                <img src="figure-49-6-carp.png" alt="Common carp" class="w-full h-24 object-cover rounded shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🐟" onerror="fallbackImage(this)">
                                 <span class="text-xs mt-1 text-center">Fig 49.6: Carp</span>
                             </div>
                             <div class="flex flex-col items-center">
-                                <img src="figure-49-7-pike.png" alt="Northern pike" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🦈" onerror="fallbackImage(this)">
+                                <img src="figure-49-7-pike.png" alt="Northern pike" class="w-full h-24 object-cover rounded shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🦈" onerror="fallbackImage(this)">
                                 <span class="text-xs mt-1 text-center">Fig 49.7: Pike</span>
                             </div>
                             <div class="flex flex-col items-center">
-                                <img src="figure-49-8-catfish.png" alt="Wels catfish" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🐟" onerror="fallbackImage(this)">
+                                <img src="figure-49-8-catfish.png" alt="Wels catfish" class="w-full h-24 object-cover rounded shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🐟" onerror="fallbackImage(this)">
                                 <span class="text-xs mt-1 text-center">Fig 49.8: Catfish</span>
                             </div>
                             <div class="flex flex-col items-center">
-                                <img src="figure-49-9-pond-turtles.png" alt="Turtle" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🐢" onerror="fallbackImage(this)">
+                                <img src="figure-49-9-pond-turtles.png" alt="Turtle" class="w-full h-24 object-cover rounded shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🐢" onerror="fallbackImage(this)">
                                 <span class="text-xs mt-1 text-center">Fig 49.9: Turtle</span>
                             </div>
                             <div class="flex flex-col items-center">
-                                <img src="figure-49-11-great-egret.png" alt="Great egret" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🦢" onerror="fallbackImage(this)">
+                                <img src="figure-49-11-great-egret.png" alt="Great egret" class="w-full h-24 object-cover rounded shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🦢" onerror="fallbackImage(this)">
                                 <span class="text-xs mt-1 text-center">Fig 49.11: Egret</span>
                             </div>
                             <div class="flex flex-col items-center">
-                                <img src="figure-49-12-otter.png" alt="Otter" class="w-full h-24 object-cover rounded shadow-sm" data-emoji="🦦" onerror="fallbackImage(this)">
+                                <img src="figure-49-12-otter.png" alt="Otter" class="w-full h-24 object-cover rounded shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openModal(this.src, this.alt)" data-emoji="🦦" onerror="fallbackImage(this)">
                                 <span class="text-xs mt-1 text-center">Fig 49.12: Otter</span>
                             </div>
                         </div>
@@ -330,6 +333,244 @@
             </div>
         </section>
 
+        <section id="quiz" class="content-section hidden">
+            <header class="mb-8">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-eco-forest mb-4">Interactive Quiz & Analysis</h2>
+                <p class="text-lg text-gray-700 leading-relaxed border-l-4 border-eco-forest pl-4 bg-white p-4 rounded-r-lg shadow-sm">
+                    Assess your understanding of Hungarian ecosystem dynamics. These tasks are designed to test your comprehension of biological relationships, ecological terminology, and species adaptations.
+                </p>
+            </header>
+
+            <div class="space-y-8">
+                <!-- Task 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Task 1: Physiological Adaptations</h3>
+                    <p class="text-gray-700 mb-4">Identify the specific winter survival strategy: Which small mammal relies entirely on accumulated autumn fat reserves to undergo complete physiological hibernation?</p>
+                    <div class="space-y-2 mb-4">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="t1" value="vole" class="form-radio text-eco-forest h-5 w-5">
+                            <span class="text-gray-700 font-medium">Bank vole</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="t1" value="squirrel" class="form-radio text-eco-forest h-5 w-5">
+                            <span class="text-gray-700 font-medium">Squirrel</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="t1" value="dormouse" class="form-radio text-eco-forest h-5 w-5">
+                            <span class="text-gray-700 font-medium">Edible dormouse</span>
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button onclick="checkTask1()" class="bg-eco-forest hover:bg-green-800 text-white font-bold py-2 px-6 rounded-lg transition-colors">Check Answer</button>
+                        <span id="task1-feedback" class="font-medium hidden"></span>
+                    </div>
+                </div>
+
+                <!-- Task 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Task 2: Fish Classification</h3>
+                    <p class="text-gray-700 mb-4">Match the fish species to their correct diet type (Herbivorous or Predatory).</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded border border-gray-200">
+                            <span class="text-gray-700 font-medium">Common carp (Ponty)</span>
+                            <select id="t2-q1" class="border border-gray-300 rounded p-1 bg-white outline-none focus:ring-2 focus:ring-eco-water transition-colors">
+                                <option value="">Select...</option>
+                                <option value="herb">Herbivorous</option>
+                                <option value="pred">Predatory</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded border border-gray-200">
+                            <span class="text-gray-700 font-medium">Northern pike (Csuka)</span>
+                            <select id="t2-q2" class="border border-gray-300 rounded p-1 bg-white outline-none focus:ring-2 focus:ring-eco-water transition-colors">
+                                <option value="">Select...</option>
+                                <option value="herb">Herbivorous</option>
+                                <option value="pred">Predatory</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded border border-gray-200">
+                            <span class="text-gray-700 font-medium">Wels catfish (Harcsa)</span>
+                            <select id="t2-q3" class="border border-gray-300 rounded p-1 bg-white outline-none focus:ring-2 focus:ring-eco-water transition-colors">
+                                <option value="">Select...</option>
+                                <option value="herb">Herbivorous</option>
+                                <option value="pred">Predatory</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded border border-gray-200">
+                            <span class="text-gray-700 font-medium">Crucian carp (Kárász)</span>
+                            <select id="t2-q4" class="border border-gray-300 rounded p-1 bg-white outline-none focus:ring-2 focus:ring-eco-water transition-colors">
+                                <option value="">Select...</option>
+                                <option value="herb">Herbivorous</option>
+                                <option value="pred">Predatory</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button onclick="checkTask2()" class="bg-eco-water hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg transition-colors">Check Answers</button>
+                        <span id="task2-feedback" class="font-medium hidden"></span>
+                    </div>
+                </div>
+
+                <!-- Task 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Task 3: True or False</h3>
+                    <p class="text-gray-700 mb-4">Determine if the following statements are true or false based on the text.</p>
+                    <div class="space-y-4 mb-6">
+                        <div class="p-3 bg-gray-50 rounded border border-gray-200" id="t3-q1-container">
+                            <p class="text-gray-700 font-medium mb-2">1. Plankton organisms have the largest population sizes in aquatic ecosystems.</p>
+                            <div class="flex space-x-6">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="t3-q1" value="true" class="form-radio text-eco-accent h-4 w-4">
+                                    <span class="font-medium text-gray-600">True</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="t3-q1" value="false" class="form-radio text-eco-accent h-4 w-4">
+                                    <span class="font-medium text-gray-600">False</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded border border-gray-200" id="t3-q2-container">
+                            <p class="text-gray-700 font-medium mb-2">2. The wild boar is described as a strictly herbivorous animal.</p>
+                            <div class="flex space-x-6">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="t3-q2" value="true" class="form-radio text-eco-accent h-4 w-4">
+                                    <span class="font-medium text-gray-600">True</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="t3-q2" value="false" class="form-radio text-eco-accent h-4 w-4">
+                                    <span class="font-medium text-gray-600">False</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded border border-gray-200" id="t3-q3-container">
+                            <p class="text-gray-700 font-medium mb-2">3. The fallow deer and the mouflon are introduced species in Hungarian forests.</p>
+                            <div class="flex space-x-6">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="t3-q3" value="true" class="form-radio text-eco-accent h-4 w-4">
+                                    <span class="font-medium text-gray-600">True</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="t3-q3" value="false" class="form-radio text-eco-accent h-4 w-4">
+                                    <span class="font-medium text-gray-600">False</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button onclick="checkTask3()" class="bg-eco-accent hover:bg-orange-800 text-white font-bold py-2 px-6 rounded-lg transition-colors">Check Answers</button>
+                        <span id="task3-feedback" class="font-medium hidden"></span>
+                    </div>
+                </div>
+
+                <!-- Task 4 (New) -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Task 4: Ecosystem Management & Population Dynamics</h3>
+                    <p class="text-gray-700 mb-4">Based on the text, what is the primary reason wildlife management is considered crucial in Hungarian forest communities?</p>
+                    <div class="space-y-3 mb-6">
+                        <label class="flex items-start space-x-3 cursor-pointer p-3 rounded border border-gray-100 hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="t4" value="a" class="form-radio text-eco-forest h-5 w-5 mt-0.5">
+                            <span class="text-gray-700 font-medium">To protect photoautotrophic plankton from being over-consumed by predatory fish.</span>
+                        </label>
+                        <label class="flex items-start space-x-3 cursor-pointer p-3 rounded border border-gray-100 hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="t4" value="b" class="form-radio text-eco-forest h-5 w-5 mt-0.5">
+                            <span class="text-gray-700 font-medium">To regulate the population sizes of large herbivores, such as the highly prolific wild boar.</span>
+                        </label>
+                        <label class="flex items-start space-x-3 cursor-pointer p-3 rounded border border-gray-100 hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="t4" value="c" class="form-radio text-eco-forest h-5 w-5 mt-0.5">
+                            <span class="text-gray-700 font-medium">To introduce new non-native species like the mouflon to increase biodiversity.</span>
+                        </label>
+                        <label class="flex items-start space-x-3 cursor-pointer p-3 rounded border border-gray-100 hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="t4" value="d" class="form-radio text-eco-forest h-5 w-5 mt-0.5">
+                            <span class="text-gray-700 font-medium">To provide artificial winter food reserves for small mammals like the bank vole.</span>
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button onclick="checkTask4()" class="bg-eco-forest hover:bg-green-800 text-white font-bold py-2 px-6 rounded-lg transition-colors">Check Answer</button>
+                        <span id="task4-feedback" class="font-medium hidden"></span>
+                    </div>
+                </div>
+
+                <!-- Task 5 (New) -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Task 5: Ecological Terminology Application</h3>
+                    <p class="text-gray-700 mb-4">Match the ecological concept or species characteristic to its correct description from the text.</p>
+                    <div class="grid grid-cols-1 gap-4 mb-6">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between p-3 bg-gray-50 rounded border border-gray-200 gap-3">
+                            <span class="text-gray-800 font-medium md:w-1/2">1. Photoautotrophic organisms</span>
+                            <select id="t5-q1" class="border border-gray-300 rounded p-2 bg-white outline-none focus:ring-2 focus:ring-eco-forest w-full md:w-1/2 text-sm">
+                                <option value="">Select description...</option>
+                                <option value="plankton">Part of the plankton community, alongside water fleas.</option>
+                                <option value="omni">The feeding strategy of the highly prolific wild boar.</option>
+                                <option value="base">Organisms that form the base of the aquatic food web, producing food via light.</option>
+                                <option value="intro">The ecological classification of the fallow deer and mouflon.</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col md:flex-row md:items-center justify-between p-3 bg-gray-50 rounded border border-gray-200 gap-3">
+                            <span class="text-gray-800 font-medium md:w-1/2">2. Omnivorous diet</span>
+                            <select id="t5-q2" class="border border-gray-300 rounded p-2 bg-white outline-none focus:ring-2 focus:ring-eco-forest w-full md:w-1/2 text-sm">
+                                <option value="">Select description...</option>
+                                <option value="plankton">Part of the plankton community, alongside water fleas.</option>
+                                <option value="omni">The feeding strategy of the highly prolific wild boar.</option>
+                                <option value="base">Organisms that form the base of the aquatic food web, producing food via light.</option>
+                                <option value="intro">The ecological classification of the fallow deer and mouflon.</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col md:flex-row md:items-center justify-between p-3 bg-gray-50 rounded border border-gray-200 gap-3">
+                            <span class="text-gray-800 font-medium md:w-1/2">3. Introduced species</span>
+                            <select id="t5-q3" class="border border-gray-300 rounded p-2 bg-white outline-none focus:ring-2 focus:ring-eco-forest w-full md:w-1/2 text-sm">
+                                <option value="">Select description...</option>
+                                <option value="plankton">Part of the plankton community, alongside water fleas.</option>
+                                <option value="omni">The feeding strategy of the highly prolific wild boar.</option>
+                                <option value="base">Organisms that form the base of the aquatic food web, producing food via light.</option>
+                                <option value="intro">The ecological classification of the fallow deer and mouflon.</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col md:flex-row md:items-center justify-between p-3 bg-gray-50 rounded border border-gray-200 gap-3">
+                            <span class="text-gray-800 font-medium md:w-1/2">4. Ciliated protozoans</span>
+                            <select id="t5-q4" class="border border-gray-300 rounded p-2 bg-white outline-none focus:ring-2 focus:ring-eco-forest w-full md:w-1/2 text-sm">
+                                <option value="">Select description...</option>
+                                <option value="plankton">Part of the plankton community, alongside water fleas.</option>
+                                <option value="omni">The feeding strategy of the highly prolific wild boar.</option>
+                                <option value="base">Organisms that form the base of the aquatic food web, producing food via light.</option>
+                                <option value="intro">The ecological classification of the fallow deer and mouflon.</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button onclick="checkTask5()" class="bg-eco-forest hover:bg-green-800 text-white font-bold py-2 px-6 rounded-lg transition-colors">Check Answers</button>
+                        <span id="task5-feedback" class="font-medium hidden"></span>
+                    </div>
+                </div>
+
+                <!-- Task 6 (New) -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Task 6: Comparative Survival Strategies (Multiple Select)</h3>
+                    <p class="text-gray-700 mb-4">Select <strong>ALL</strong> the statements that accurately reflect the winter adaptations of small forest mammals described in the text.</p>
+                    <div class="space-y-3 mb-6">
+                        <label class="flex items-start space-x-3 cursor-pointer p-3 rounded border border-gray-100 hover:bg-gray-50 transition-colors">
+                            <input type="checkbox" id="t6-opt1" class="form-checkbox text-eco-accent h-5 w-5 mt-0.5 rounded">
+                            <span class="text-gray-700 font-medium">Bank voles and wood mice remain active under the snow and rely on hoarded food.</span>
+                        </label>
+                        <label class="flex items-start space-x-3 cursor-pointer p-3 rounded border border-gray-100 hover:bg-gray-50 transition-colors">
+                            <input type="checkbox" id="t6-opt2" class="form-checkbox text-eco-accent h-5 w-5 mt-0.5 rounded">
+                            <span class="text-gray-700 font-medium">Squirrels undergo complete physiological hibernation and do not wake up until spring.</span>
+                        </label>
+                        <label class="flex items-start space-x-3 cursor-pointer p-3 rounded border border-gray-100 hover:bg-gray-50 transition-colors">
+                            <input type="checkbox" id="t6-opt3" class="form-checkbox text-eco-accent h-5 w-5 mt-0.5 rounded">
+                            <span class="text-gray-700 font-medium">Edible dormice survive the winter entirely by utilizing fat reserves accumulated during the autumn.</span>
+                        </label>
+                        <label class="flex items-start space-x-3 cursor-pointer p-3 rounded border border-gray-100 hover:bg-gray-50 transition-colors">
+                            <input type="checkbox" id="t6-opt4" class="form-checkbox text-eco-accent h-5 w-5 mt-0.5 rounded">
+                            <span class="text-gray-700 font-medium">All small mammals migrate to warmer areas to avoid the food-scarce winter.</span>
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button onclick="checkTask6()" class="bg-eco-accent hover:bg-orange-800 text-white font-bold py-2 px-6 rounded-lg transition-colors">Check Answers</button>
+                        <span id="task6-feedback" class="font-medium hidden"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="dictionary" class="content-section hidden">
             <header class="mb-8">
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-800 mb-4">Interactive Mini Dictionary</h2>
@@ -375,6 +616,15 @@
                 </div>
             </div>
         </section>
+
+        <!-- Image Lightbox Modal -->
+        <div id="imageModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-80 flex items-center justify-center p-4 transition-opacity" onclick="closeModal(event)">
+            <div class="relative max-w-5xl w-full max-h-[95vh] flex flex-col items-center justify-center">
+                <button onclick="closeModal(event, true)" class="absolute -top-10 right-0 text-white hover:text-gray-300 text-4xl font-bold focus:outline-none" aria-label="Close modal">&times;</button>
+                <img id="modalImage" src="" alt="Enlarged view" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl">
+                <p id="modalCaption" class="text-white mt-4 text-xl font-medium text-center"></p>
+            </div>
+        </div>
     </main>
 
     <script>
@@ -418,6 +668,206 @@
             filterCategory: 'All',
             chartsRendered: false
         };
+
+        function openModal(src, alt) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            modalImg.src = src;
+            modalCaption.textContent = alt;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal(event, force = false) {
+            if (force || event.target.id === 'imageModal') {
+                const modal = document.getElementById('imageModal');
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        }
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal(event, true);
+            }
+        });
+
+        function checkTask1() {
+            const options = document.getElementsByName('t1');
+            let selected = null;
+            options.forEach(opt => { if(opt.checked) selected = opt.value; });
+            
+            const feedback = document.getElementById('task1-feedback');
+            feedback.classList.remove('hidden', 'text-green-600', 'text-red-600', 'text-gray-600');
+            
+            if (!selected) {
+                feedback.textContent = 'Please select an answer.';
+                feedback.classList.add('text-gray-600');
+            } else if (selected === 'dormouse') {
+                feedback.textContent = 'Correct! 🌟 The edible dormouse hibernates the whole winter.';
+                feedback.classList.add('text-green-600');
+            } else {
+                feedback.textContent = 'Incorrect. Try again! (Hint: Look at the Small Mammals section)';
+                feedback.classList.add('text-red-600');
+            }
+        }
+
+        function checkTask2() {
+            const q1 = document.getElementById('t2-q1');
+            const q2 = document.getElementById('t2-q2');
+            const q3 = document.getElementById('t2-q3');
+            const q4 = document.getElementById('t2-q4');
+            
+            const feedback = document.getElementById('task2-feedback');
+            feedback.classList.remove('hidden', 'text-green-600', 'text-red-600', 'text-gray-600');
+
+            if (!q1.value || !q2.value || !q3.value || !q4.value) {
+                feedback.textContent = 'Please select an option for all fish.';
+                feedback.classList.add('text-gray-600');
+                return;
+            }
+
+            let correctCount = 0;
+            // Clean up previous states
+            [q1, q2, q3, q4].forEach(el => el.classList.remove('bg-green-100', 'bg-red-100', 'border-green-400', 'border-red-400'));
+
+            if (q1.value === 'herb') { correctCount++; q1.classList.add('bg-green-100', 'border-green-400'); } else { q1.classList.add('bg-red-100', 'border-red-400'); }
+            if (q2.value === 'pred') { correctCount++; q2.classList.add('bg-green-100', 'border-green-400'); } else { q2.classList.add('bg-red-100', 'border-red-400'); }
+            if (q3.value === 'pred') { correctCount++; q3.classList.add('bg-green-100', 'border-green-400'); } else { q3.classList.add('bg-red-100', 'border-red-400'); }
+            if (q4.value === 'herb') { correctCount++; q4.classList.add('bg-green-100', 'border-green-400'); } else { q4.classList.add('bg-red-100', 'border-red-400'); }
+
+            if (correctCount === 4) {
+                feedback.textContent = 'Perfect! All fish classified correctly. 🐟';
+                feedback.classList.add('text-green-600');
+            } else {
+                feedback.textContent = `You got ${correctCount}/4 correct. Check the red ones and try again!`;
+                feedback.classList.add('text-red-600');
+            }
+        }
+
+        function checkTask3() {
+            const q1 = document.querySelector('input[name="t3-q1"]:checked');
+            const q2 = document.querySelector('input[name="t3-q2"]:checked');
+            const q3 = document.querySelector('input[name="t3-q3"]:checked');
+            
+            const feedback = document.getElementById('task3-feedback');
+            feedback.classList.remove('hidden', 'text-green-600', 'text-red-600', 'text-gray-600');
+
+            if (!q1 || !q2 || !q3) {
+                feedback.textContent = 'Please answer all True/False questions.';
+                feedback.classList.add('text-gray-600');
+                return;
+            }
+
+            let correctCount = 0;
+            const c1 = document.getElementById('t3-q1-container');
+            const c2 = document.getElementById('t3-q2-container');
+            const c3 = document.getElementById('t3-q3-container');
+
+            [c1, c2, c3].forEach(el => el.classList.remove('bg-green-50', 'bg-red-50', 'border-green-300', 'border-red-300'));
+
+            if (q1.value === 'true') { correctCount++; c1.classList.add('bg-green-50', 'border-green-300'); } else { c1.classList.add('bg-red-50', 'border-red-300'); }
+            if (q2.value === 'false') { correctCount++; c2.classList.add('bg-green-50', 'border-green-300'); } else { c2.classList.add('bg-red-50', 'border-red-300'); } // boar is omnivorous
+            if (q3.value === 'true') { correctCount++; c3.classList.add('bg-green-50', 'border-green-300'); } else { c3.classList.add('bg-red-50', 'border-red-300'); } // fallow deer and mouflon are introduced
+
+            if (correctCount === 3) {
+                feedback.textContent = 'Excellent! 3/3 Correct! 🎉';
+                feedback.classList.add('text-green-600');
+            } else {
+                feedback.textContent = `You got ${correctCount}/3 correct. Review the highlighted answers!`;
+                feedback.classList.add('text-red-600');
+            }
+        }
+
+        function checkTask4() {
+            const options = document.getElementsByName('t4');
+            let selected = null;
+            options.forEach(opt => { if(opt.checked) selected = opt.value; });
+            
+            const feedback = document.getElementById('task4-feedback');
+            feedback.classList.remove('hidden', 'text-green-600', 'text-red-600', 'text-gray-600');
+            
+            if (!selected) {
+                feedback.textContent = 'Please select an answer.';
+                feedback.classList.add('text-gray-600');
+            } else if (selected === 'b') {
+                feedback.textContent = 'Correct! Controlling large herbivore populations is essential for forest balance.';
+                feedback.classList.add('text-green-600');
+            } else {
+                feedback.textContent = 'Incorrect. Review the section on "Large Herbivores & Mammals".';
+                feedback.classList.add('text-red-600');
+            }
+        }
+
+        function checkTask5() {
+            const q1 = document.getElementById('t5-q1');
+            const q2 = document.getElementById('t5-q2');
+            const q3 = document.getElementById('t5-q3');
+            const q4 = document.getElementById('t5-q4');
+            
+            const feedback = document.getElementById('task5-feedback');
+            feedback.classList.remove('hidden', 'text-green-600', 'text-red-600', 'text-gray-600');
+
+            if (!q1.value || !q2.value || !q3.value || !q4.value) {
+                feedback.textContent = 'Please select a description for all terms.';
+                feedback.classList.add('text-gray-600');
+                return;
+            }
+
+            let correctCount = 0;
+            [q1, q2, q3, q4].forEach(el => el.parentElement.classList.remove('bg-green-50', 'bg-red-50', 'border-green-300', 'border-red-300'));
+
+            if (q1.value === 'base') { correctCount++; q1.parentElement.classList.add('bg-green-50', 'border-green-300'); } else { q1.parentElement.classList.add('bg-red-50', 'border-red-300'); }
+            if (q2.value === 'omni') { correctCount++; q2.parentElement.classList.add('bg-green-50', 'border-green-300'); } else { q2.parentElement.classList.add('bg-red-50', 'border-red-300'); }
+            if (q3.value === 'intro') { correctCount++; q3.parentElement.classList.add('bg-green-50', 'border-green-300'); } else { q3.parentElement.classList.add('bg-red-50', 'border-red-300'); }
+            if (q4.value === 'plankton') { correctCount++; q4.parentElement.classList.add('bg-green-50', 'border-green-300'); } else { q4.parentElement.classList.add('bg-red-50', 'border-red-300'); }
+
+            if (correctCount === 4) {
+                feedback.textContent = 'Outstanding! All ecological concepts matched perfectly. 🌍';
+                feedback.classList.add('text-green-600');
+            } else {
+                feedback.textContent = `You got ${correctCount}/4 correct. Review the highlighted answers.`;
+                feedback.classList.add('text-red-600');
+            }
+        }
+
+        function checkTask6() {
+            const opt1 = document.getElementById('t6-opt1');
+            const opt2 = document.getElementById('t6-opt2');
+            const opt3 = document.getElementById('t6-opt3');
+            const opt4 = document.getElementById('t6-opt4');
+            
+            const feedback = document.getElementById('task6-feedback');
+            feedback.classList.remove('hidden', 'text-green-600', 'text-red-600', 'text-gray-600');
+
+            if (!opt1.checked && !opt2.checked && !opt3.checked && !opt4.checked) {
+                feedback.textContent = 'Please select at least one option.';
+                feedback.classList.add('text-gray-600');
+                return;
+            }
+
+            // Reset styles
+            [opt1, opt2, opt3, opt4].forEach(el => el.parentElement.classList.remove('bg-green-50', 'bg-red-50', 'border-green-300', 'border-red-300'));
+
+            let correctSelections = 0;
+            let incorrectSelections = 0;
+
+            if (opt1.checked) { correctSelections++; opt1.parentElement.classList.add('bg-green-50', 'border-green-300'); }
+            if (opt3.checked) { correctSelections++; opt3.parentElement.classList.add('bg-green-50', 'border-green-300'); }
+            
+            if (opt2.checked) { incorrectSelections++; opt2.parentElement.classList.add('bg-red-50', 'border-red-300'); }
+            if (opt4.checked) { incorrectSelections++; opt4.parentElement.classList.add('bg-red-50', 'border-red-300'); }
+
+            if (correctSelections === 2 && incorrectSelections === 0) {
+                feedback.textContent = 'Spot on! You accurately identified the correct survival strategies. 🏆';
+                feedback.classList.add('text-green-600');
+            } else {
+                feedback.textContent = 'Not quite. Remember: Squirrels only *decrease* activity, and migration is not mentioned for these mammals.';
+                feedback.classList.add('text-red-600');
+            }
+        }
 
         function fallbackImage(img) {
             const originalSrc = img.getAttribute('src');
